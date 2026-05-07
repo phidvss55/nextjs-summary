@@ -1,0 +1,100 @@
+# ~/.codex/config.toml
+
+model = "gpt-5.5-codex"
+model_reasoning_effort = "high"
+
+# An toàn cho coding hằng ngày:
+# - Codex được đọc/sửa file trong workspace
+# - Không full quyền máy
+sandbox_mode = "workspace-write"
+
+# Codex sẽ hỏi khi cần quyền vượt sandbox / thao tác nhạy cảm
+approval_policy = "on-request"
+
+# Cho phép network trong sandbox khi cần pnpm install, npm view, test browser, v.v.
+[sandbox_workspace_write]
+network_access = true
+
+# Không tự động ghi ra /tmp nếu muốn kiểm soát chặt hơn
+exclude_slash_tmp = false
+exclude_tmpdir_env_var = false
+
+# Lưu history để dễ tiếp tục context
+[history]
+save = true
+
+# =========================
+# PROFILES
+# =========================
+
+[profiles.backend]
+model = "gpt-5.5-codex"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+
+[profiles.backend.env]
+NODE_ENV = "development"
+
+[profiles.e2e]
+model = "gpt-5.5-codex"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+
+[profiles.e2e.env]
+NODE_ENV = "test"
+BROWSER = "chromium"
+CI = "true"
+
+[profiles.review]
+model = "gpt-5.5-codex"
+model_reasoning_effort = "high"
+sandbox_mode = "read-only"
+approval_policy = "on-request"
+
+[profiles.safe]
+model = "gpt-5.5-codex"
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+approval_policy = "on-request"
+
+# =========================
+# MCP SERVERS - optional
+# Bật từng cái khi bạn đã có token/env phù hợp
+# =========================
+
+# GitHub MCP: đọc repo, issue, PR
+# Trước khi dùng:
+# export GITHUB_PERSONAL_ACCESS_TOKEN="xxx"
+[mcp_servers.github]
+enabled = false
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+env_vars = ["GITHUB_PERSONAL_ACCESS_TOKEN"]
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+
+# PostgreSQL MCP: dùng cho đọc schema/query DB dev
+# Trước khi dùng:
+# export POSTGRES_CONNECTION_STRING="postgresql://user:pass@localhost:5432/db"
+[mcp_servers.postgres]
+enabled = false
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-postgres", "$POSTGRES_CONNECTION_STRING"]
+env_vars = ["POSTGRES_CONNECTION_STRING"]
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+
+# Filesystem MCP: chỉ nên trỏ vào workspace cụ thể
+# Đổi path bên dưới theo repo của bạn
+[mcp_servers.filesystem]
+enabled = false
+command = "npx"
+args = [
+  "-y",
+  "@modelcontextprotocol/server-filesystem",
+  "/path/to/your/nestjs-repo"
+]
+startup_timeout_sec = 20
+tool_timeout_sec = 60

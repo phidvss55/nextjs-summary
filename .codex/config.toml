@@ -1,0 +1,24 @@
+model = "gpt-5.5-codex"
+model_reasoning_effort = "high"
+
+approval_policy = "on-failure"
+sandbox_mode = "workspace-write"
+
+[history]
+save = true
+
+[mcp_servers.github]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+
+[mcp_servers.postgres]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-postgres"]
+
+[profiles.backend]
+model = "gpt-5.5-codex"
+sandbox_mode = "workspace-write"
+
+[profiles.review]
+model = "gpt-5"
+approval_policy = "untrusted"
