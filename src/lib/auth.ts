@@ -19,7 +19,7 @@ export const auth = betterAuth({
 
     sendResetPassword: async ({ url }) => {
       void sendResetPasswordEmail({
-        to: 'atiqullah.naemi21@gmail.com',
+        to: 'phidv9855@gmail.com',
         subject: 'Reset your password',
         url,
       });

@@ -1,19 +1,8 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
 import Sidebar from '@/components/common/sidebar';
 import { authSession } from '@/lib/auth-utils';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -28,7 +17,7 @@ export default async function RootLayout({
   const session = await authSession();
 
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" className="antialiased">
       <body className="bg-neutral-100 text-neutral-900 font-sans flex">
         {session?.user.id && <Sidebar />}
         <div className="w-full min-w-dvw overflow-hidden">{children}</div>

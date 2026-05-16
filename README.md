@@ -23,7 +23,7 @@ pnpm dlx create-db # generate database
 pnpm dlx auth@latest generate
 
 # create new migrations based on the changes in `schema.prisma` and apply to db
-npx prisma migrate dev
+npx prisma migrate -> generate typescript files inside `generated` folder
 
 # migrate
 npx auth@latest migrate # ??
